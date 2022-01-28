@@ -27,16 +27,27 @@ public class Main_E {
         String firstLine = r.readLine().toLowerCase(Locale.ROOT);
         String secondLine = r.readLine().toLowerCase(Locale.ROOT);
 
+        boolean result = firstLine.length() == secondLine.length();
+
+        Map<Character, Integer> map = new HashMap<>();
+
         char[] firstLineArray = firstLine.toCharArray();
         char[] secondLineArray = secondLine.toCharArray();
 
-        Arrays.sort(firstLineArray);
-        Arrays.sort(secondLineArray);
+        for (char c : firstLineArray) {
+            map.merge(c, 1, Integer::sum);
+        }
 
-        firstLine = new String(firstLineArray);
-        secondLine = new String(secondLineArray);
+        for (char c : secondLineArray) {
+            map.merge(c, 1, (prev, curr)-> prev - curr);
+        }
 
-        boolean result = firstLine.length() == secondLine.length() && firstLine.equals(secondLine);
+        for (Integer integer : map.values()){
+            if (integer != 0) {
+                result = false;
+                break;
+            }
+        }
 
         System.out.println(result ? 1 : 0);
     }
@@ -65,3 +76,22 @@ public class Main_E {
 //        foreach key k, value v in character_map:
 //        if v != 0:
 //        throw exception "Not anagrams"
+
+
+//    BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
+//
+//    String firstLine = r.readLine().toLowerCase(Locale.ROOT);
+//    String secondLine = r.readLine().toLowerCase(Locale.ROOT);
+//
+//    char[] firstLineArray = firstLine.toCharArray();
+//    char[] secondLineArray = secondLine.toCharArray();
+//
+//        Arrays.sort(firstLineArray);
+//                Arrays.sort(secondLineArray);
+//
+//                firstLine = new String(firstLineArray);
+//                secondLine = new String(secondLineArray);
+//
+//                boolean result = firstLine.length() == secondLine.length() && firstLine.equals(secondLine);
+//
+//                System.out.println(result ? 1 : 0);
